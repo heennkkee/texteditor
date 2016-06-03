@@ -6,7 +6,7 @@ This project is the final part of the javascript course at BTH in Sweden (spring
 
 ## Initiation
 
-Include the wysiwyg.js, include the wysiwyg.css and make sure you have the autosave.php (may be renamed/replace with a parameter) in the correct places.
+Include the `wysiwyg.js`, include the `wysiwyg.css` and make sure you have the `autosave.php` (may be renamed/replace with a parameter) in the correct places.
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 

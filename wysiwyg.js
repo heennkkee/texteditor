@@ -47,7 +47,8 @@ window.myEditor = (function () {
         saveCount = 0,
         saveLimit,
         clearSession,
-        autosavePath;
+        autosavePath,
+        parentDisplay;
 
     textEditor = function (reference, options) {
         autosavePath = options.autosave;
@@ -56,7 +57,9 @@ window.myEditor = (function () {
         contentEditor = reference;
 
         parent = document.createElement('div');
-        parent.style.display = options.display;
+        parentDisplay = options.display;
+
+        parent.style.display = parentDisplay;
         parent.style.width = options.width;
         parent.style.border = options.parentBorder;
 
@@ -142,9 +145,9 @@ window.myEditor = (function () {
         }, 20);
     };
 
-    fadeIn = function (element) {
+    fadeIn = function (element, display) {
         var op = 0;  // initial opacity
-        element.style.display = null;
+        element.style.display = (display === undefined) ? '' : display;
         fadeOutTimer = setInterval(function () {
             if (op >= 1) {
                 clearInterval(fadeOutTimer);
@@ -404,7 +407,7 @@ window.myEditor = (function () {
                 me.className = me.className.replace('maximize', 'minimize');
                 me.title = 'Minimize the editor.';
             }
-            fadeIn(parent);
+            fadeIn(parent, parentDisplay);
         });
     };
 

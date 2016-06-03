@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="wysiwyg.css">
 </head>
 <body>
     <div style="width: 100%; font-family: 'Calibri';">
