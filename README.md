@@ -10,6 +10,8 @@ Include the `wysiwyg.js`, include the `wysiwyg.css` and make sure you have the `
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 
+To save to an external database, add an eventListener to the selected `div` (the one passed to the `init()` function) and listen for the event `save`. There is no data passed with the event, but it should be sufficient to decide how to save to an external database (maybe using an AJAX call?).
+
 ### Options
 
 Options to pass as second parameter in `init` call:
