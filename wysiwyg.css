@@ -9,7 +9,6 @@ body {
 
 .textEditor {
     background-color: transparent;
-    font-family: Arial;
 }
 
 .textEditor.maximized {
@@ -72,7 +71,6 @@ body {
 
 .statusBar {
     padding: 5px;
-    background-color: white;
 }
 
 .statusBar.detached {

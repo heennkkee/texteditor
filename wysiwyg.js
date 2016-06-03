@@ -11,7 +11,7 @@ window.myEditor = (function () {
             'justifyRight': {state: false, cmd: 'justifyRight', obj: null, className: 'format_align_right icon inactive', tooltip: 'Justify right'}
         },
         toggleKeys = Object.keys(toggles),
-        fonts = ['Arial', 'Times New Roman', 'Lucida Console', 'Calibri', 'Comic Sans MS', 'Verdana'],
+        fonts = ['Arial', 'Times New Roman', 'Lucida Console', 'Courier New', 'Calibri', 'Comic Sans MS', 'Verdana'],
         sizes = {1: 'Smallest', 2: 'Small', 3: 'Normal', 4: 'Big', 5: 'Bigger', 6: 'Huge', 7: 'Gigantic'},
         parent,
         statusBar,
@@ -53,7 +53,7 @@ window.myEditor = (function () {
     textEditor = function (reference, options) {
         autosavePath = options.autosave;
 
-        var bar = createStatusbar(options.state);
+        var bar = createStatusbar(options.state, options.toolbarBackground);
         contentEditor = reference;
 
         parent = document.createElement('div');
@@ -62,6 +62,7 @@ window.myEditor = (function () {
         parent.style.display = parentDisplay;
         parent.style.width = options.width;
         parent.style.border = options.parentBorder;
+        parent.style.margin = options.parentMargin;
 
         contentEditor.parentNode.insertBefore(parent, contentEditor);
         contentEditor.remove();
@@ -125,6 +126,10 @@ window.myEditor = (function () {
         newOptions.width = (options.width === undefined) ? '' : options.width;
         newOptions.autosave = (options.autosave === undefined) ? 'autosave.php' : options.autosave;
         newOptions.parentBorder = (options.parentBorder === undefined) ? '' : options.parentBorder;
+        newOptions.parentMargin = (options.parentMargin === undefined) ? '' : options.parentMargin;
+        newOptions.toolbarBackground = (options.toolbarBackground === undefined) ? 'white' : options.toolbarBackground;
+        
+        fonts.sort();
 
         textEditor(el, newOptions);
         load();
@@ -157,13 +162,14 @@ window.myEditor = (function () {
         }, 20);
     };
 
-    createStatusbar = function (state) {
+    createStatusbar = function (state, bgcolor) {
         var x = 0,
             temp;
 
         statusBar = document.createElement('div');
         statusBar.id = 'henrik-statusBar';
         statusBar.className = "statusBar minimized " + ((state === 'detached') ? 'detached' : 'attached');
+        statusBar.style.background = bgcolor;
 
         statusBarAttached = ((state === 'detached') ? false : true);
         if (!statusBarAttached) {
