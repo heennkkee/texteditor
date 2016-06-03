@@ -123,3 +123,6 @@ body {
 .font_color {
     background-image: url('media/font_color.svg');
 }
+.save {
+    background-image: url('media/save.svg');
+}
