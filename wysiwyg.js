@@ -1,12 +1,5 @@
-var toggles = {
-        'bold': {state: false, cmd: 'bold', obj: null, className: 'format_bold icon inactive', tooltip: 'Bold'},
-        'italic': {state: false, cmd: 'italic', obj: null, className: 'format_italic icon inactive', tooltip: 'Italic'},
-        'underline': {state: false, cmd: 'underline', obj: null, className: 'format_underline bold icon inactive', tooltip: 'Underline'},
-        'justifyLeft': {state: true, cmd: 'justifyLeft', obj: null, className: 'format_align_left icon active', tooltip: 'Justify left'},
-        'justifyCenter': {state: false, cmd: 'justifyCenter', obj: null, className: 'format_align_center icon inactive', tooltip: 'Justify center'},
-        'justifyRight': {state: false, cmd: 'justifyRight', obj: null, className: 'format_align_right icon inactive', tooltip: 'Justify right'}
-    },
-    toggleKeys = Object.keys(toggles),
+var
+
     fonts = ['Arial', 'Times New Roman', 'Lucida Console', 'Comic Sans MS', 'Verdana'],
     sizes = {1: 'Smallest', 2: 'Small', 3: 'Normal', 4: 'Big', 5: 'Bigger', 6: 'Huge', 7: 'Gigantic'},
     parent,
@@ -19,55 +12,65 @@ var toggles = {
     contentEditor,
     colorPicker;
 
-    class TextEditor {
-        constructor(el, state) {
-            this.parent = el;
-            this.parent.className = 'textEditor minimized';
-
-            //this.createStatusbar();
-
-            this.contentEditor = document.createElement('div');
-            this.contentEditor.contentEditable = "true";
-            this.contentEditor.id = "henrik-text";
-            this.contentEditor.className = "my-textarea";
-
-            this.contentEditor.onkeydown = function (event) {
-                this.checkHotkeys(event);
+class TextEditor {
+    constructor(el, state) {
+        this.toggles = {
+                'bold': {state: false, cmd: 'bold', obj: null, className: 'format_bold icon inactive', tooltip: 'Bold'},
+                'italic': {state: false, cmd: 'italic', obj: null, className: 'format_italic icon inactive', tooltip: 'Italic'},
+                'underline': {state: false, cmd: 'underline', obj: null, className: 'format_underline bold icon inactive', tooltip: 'Underline'},
+                'justifyLeft': {state: true, cmd: 'justifyLeft', obj: null, className: 'format_align_left icon active', tooltip: 'Justify left'},
+                'justifyCenter': {state: false, cmd: 'justifyCenter', obj: null, className: 'format_align_center icon inactive', tooltip: 'Justify center'},
+                'justifyRight': {state: false, cmd: 'justifyRight', obj: null, className: 'format_align_right icon inactive', tooltip: 'Justify right'}
             };
+        this.toggleKeys = Object.keys(this.toggles);
 
-            this.contentEditor.onmouseup = function () {
-                this.check();
-            };
-            this.contentEditor.onkeyup = function () {
-                this.check();
-                this.autosave();
-            };
-            this.contentEditor.oncontextmenu = function (event) {
-                if (!statusBarAttached) {
-                    this.clearMyTimeout();
-                    this.moveStatusBar(event.pageX, event.pageY);
-                    event.preventDefault();
-                }
-            };
+        this.parent = el;
+        this.parent.className = 'textEditor minimized';
 
-            document.getElementById('myArea').appendChild(this.contentEditor);
-            this.load(this.contentEditor);
-        }
+        //this.createStatusbar();
 
-        load(target) {
-            "use strict";
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", "autosave.php", true);
-            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xmlhttp.send("do=load");
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                    var text = JSON.parse(xmlhttp.responseText).output;
-                    target.innerHTML = text;
-                }
-            };
-        }
+        this.contentEditor = document.createElement('div');
+        this.contentEditor.contentEditable = "true";
+        this.contentEditor.id = "henrik-text";
+        this.contentEditor.className = "my-textarea";
+
+        this.contentEditor.onkeydown = function (event) {
+            this.checkHotkeys(event);
+        };
+
+        this.contentEditor.onmouseup = function () {
+            this.check();
+        };
+        this.contentEditor.onkeyup = function () {
+            this.check();
+            this.autosave();
+        };
+        this.contentEditor.oncontextmenu = function (event) {
+            if (!statusBarAttached) {
+                this.clearMyTimeout();
+                this.moveStatusBar(event.pageX, event.pageY);
+                event.preventDefault();
+            }
+        };
+
+        document.getElementById('myArea').appendChild(this.contentEditor);
+        this.load(this.contentEditor);
     }
+
+    load(target) {
+        "use strict";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "autosave.php", true);
+        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlhttp.send("do=load");
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                var text = JSON.parse(xmlhttp.responseText).output;
+                target.innerHTML = text;
+            }
+        };
+    }
+}
 
 function toggleLooks(e) {
     "use strict";
