@@ -1,0 +1,124 @@
+body {
+    overflow-y: scroll;
+}
+.my-textarea {
+    min-height: 150px;
+    border: 1px grey solid;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.my-textarea:focus {
+    outline-color: pink;
+}
+
+.textEditor {
+    background-color: transparent;
+    font-family: Arial;
+}
+
+.textEditor.maximized {
+    width: 94% !important;
+    position: absolute;
+    top: 5px;
+    left: 3%;
+    background-color: white;
+}
+
+.mySelect {
+    height: 30px;
+
+    background-repeat: no-repeat;
+    background-size: 26px;
+    padding: 2px 2px 2px 24px;
+    margin-right: 5px;
+    vertical-align: top;
+    border-radius: 5px;
+    border: 2px #3e3e3e solid;
+    outline: none;
+}
+
+.mySelect.fontFamily {
+    background-image: url('media/font.svg');
+    width: 170px;
+}
+
+.mySelect.fontSize {
+    background-image: url('media/font_size.svg');
+    width: 100px;
+}
+.icon {
+    background-size: 26px;
+    background-repeat: no-repeat;
+    color: #3e3e3e;
+    border: 2px #3e3e3e solid;
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 5px;
+    background-color: white;
+}
+
+.icon:active {
+    background-color: #DADADA;
+}
+
+.icon.active {
+    background-color: #DADADA;
+}
+
+.statusBar {
+    padding: 5px;
+    background-color: white;
+}
+
+.statusBar.detached {
+    width: 210px;
+    position: absolute;
+    border: 1px black solid;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    box-shadow: 5px 5px 25px #CCC;
+}
+
+.statusBar.attached {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.format_bold {
+    background-image: url('media/bold.svg');
+}
+.format_italic {
+    background-image: url('media/italic.svg');
+}
+.format_underline {
+    background-image: url('media/underline.svg');
+}
+.format_align_left {
+    background-image: url('media/align_left.svg');
+}
+.format_align_right {
+    background-image: url('media/align_right.svg');
+}
+.format_align_center {
+    background-image: url('media/align_center.svg');
+}
+.attach {
+    background-image: url('media/attach.svg');
+}
+.detach {
+    background-image: url('media/detach.svg');
+}
+.maximize {
+    background-image: url('media/maximize.svg');
+}
+.minimize {
+    background-image: url('media/minimize.svg');
+}
+.font_color {
+    background-image: url('media/font_color.svg');
+}
