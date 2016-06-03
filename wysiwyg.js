@@ -65,7 +65,7 @@ window.myEditor = (function () {
         parent.appendChild(contentEditor);
 
         contentEditor.contentEditable = "true";
-        contentEditor.className += " my-textarea";
+        contentEditor.className += " my-textarea minimized";
         contentEditor.style.border = options.border;
 
         contentEditor.onkeydown = function (event) {
@@ -390,10 +390,12 @@ window.myEditor = (function () {
         fadeOut(parent, function () {
             if (parent.className.indexOf('maximized') > -1) {
                 parent.className = parent.className.replace('maximized', 'minimized');
+                contentEditor.className = contentEditor.className.replace('maximized', 'minimized');
                 me.className = me.className.replace('minimize', 'maximize');
                 me.title = 'Maximize the editor.';
             } else {
                 parent.className = parent.className.replace('minimized', 'maximized');
+                contentEditor.className = contentEditor.className.replace('minimized', 'maximized');
                 me.className = me.className.replace('maximize', 'minimize');
                 me.title = 'Minimize the editor.';
             }

@@ -2,7 +2,6 @@ body {
     overflow-y: scroll;
 }
 .my-textarea {
-    min-height: 150px;
     border-radius: 5px;
     padding: 5px;
     outline: none;
@@ -19,6 +18,10 @@ body {
     top: 5px;
     left: 3%;
     background-color: white;
+}
+
+.maximized {
+    width: 94% !important;
 }
 
 .mySelect {

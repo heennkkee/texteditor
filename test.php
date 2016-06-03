@@ -13,9 +13,8 @@
     </div>
 <script src="wysiwyg.js"></script>
 <script>
-//    initWYSIWYG(document.getElementById('myArea'));
-    //var test = new TextEditor(document.getElementById('myArea'));
     window.myEditor.init(document.getElementById('editMe'), {});
+    
     document.getElementById('editMe').addEventListener('save', function () {
         console.log("Heard save event.");
     });
