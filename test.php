@@ -1,7 +1,5 @@
-<?php include('../mall/header.php'); ?>
-<link rel="stylesheet" type="text/css" href="style.css">
 
-<div class="playbox" id="playbox">
+<link rel="stylesheet" type="text/css" href="style.css">
     <div>
         <ul>
             <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">execCommand</a></li>
@@ -9,13 +7,9 @@
             <li><a href="https://design.google.com/icons/">Google icons</a></li>
         </ul>
     </div>
-    <div id="myArea">
-
-    </div>
-</div>
-<?php include('../mall/js.php');?>
+    <div id="myArea" style="width: 600px"></div>
 <script src="wysiwyg.js"></script>
 <script>
-    initWYSIWYG(document.getElementById('myArea'));
+//    initWYSIWYG(document.getElementById('myArea'));
+    var test = new TextEditor(document.getElementById('myArea'));
 </script>
-<?php include('../mall/footer.php');?>
