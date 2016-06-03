@@ -404,7 +404,6 @@ window.myEditor = (function () {
     };
 
     autosave = function () {
-        console.log(contentEditor.id);
         if (saveCount > saveLimit) {
             save();
             saveCount = 0;
