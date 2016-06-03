@@ -46,9 +46,11 @@ window.myEditor = (function () {
         saveEvent = new Event('save'),
         saveCount = 0,
         saveLimit,
-        clearSession;
+        clearSession,
+        autosavePath;
 
     textEditor = function (reference, options) {
+        autosavePath = options.autosave;
 
         var bar = createStatusbar(options.state);
         contentEditor = reference;
@@ -92,7 +94,7 @@ window.myEditor = (function () {
 
     load = function () {
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "autosave.php", true);
+        xmlhttp.open("POST", autosavePath, true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send("do=load&id=" + contentEditor.id);
         xmlhttp.onreadystatechange = function () {
@@ -118,6 +120,7 @@ window.myEditor = (function () {
         newOptions.border = (options.border === undefined) ? '1px black solid' : options.border;
         newOptions.display = (options.display === undefined) ? 'inline-block' : options.display;
         newOptions.width = (options.width === undefined) ? '' : options.width;
+        newOptions.autosave = (options.autosave === undefined) ? 'autosave.php' : options.autosave;
 
         textEditor(el, newOptions);
         load();
@@ -411,7 +414,7 @@ window.myEditor = (function () {
             clearSession();
         } else {
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", "autosave.php", true);
+            xmlhttp.open("POST", autosavePath, true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xmlhttp.send("id=" + contentEditor.id + "&do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, ' '));
             saveCount += 1;
@@ -429,7 +432,7 @@ window.myEditor = (function () {
 
     clearSession = function () {
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "autosave.php", true);
+        xmlhttp.open("POST", autosavePath, true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send("do=clear&id=" + contentEditor.id);
 
