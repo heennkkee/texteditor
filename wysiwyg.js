@@ -1,4 +1,5 @@
 /*global Event, XMLHttpRequest */
+
 window.myEditor = (function () {
     "use strict";
     var toggles = {
@@ -461,3 +462,8 @@ window.myEditor = (function () {
     };
 
 }());
+
+function initWYSIWYG(el, options) {
+    "use strict";
+    window.myEditor.init(el, options);
+}
