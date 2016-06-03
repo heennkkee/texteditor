@@ -58,7 +58,7 @@ window.myEditor = (function () {
         parent = document.createElement('div');
         parent.style.display = options.display;
         parent.style.width = options.width;
-
+        parent.style.border = options.parentBorder;
 
         contentEditor.parentNode.insertBefore(parent, contentEditor);
         contentEditor.remove();
@@ -121,6 +121,7 @@ window.myEditor = (function () {
         newOptions.display = (options.display === undefined) ? 'inline-block' : options.display;
         newOptions.width = (options.width === undefined) ? '' : options.width;
         newOptions.autosave = (options.autosave === undefined) ? 'autosave.php' : options.autosave;
+        newOptions.parentBorder = (options.parentBorder === undefined) ? '' : options.parentBorder;
 
         textEditor(el, newOptions);
         load();

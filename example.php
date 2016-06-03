@@ -25,7 +25,7 @@
 
     <script src="wysiwyg.js"></script>
     <script>
-        initWYSIWYG(document.getElementById('editMe'), {border: ''});
+        initWYSIWYG(document.getElementById('editMe'), {parentBorder: '1px black solid', border: ''});
 
         document.getElementById('editMe').addEventListener('save', function (event) {
             var text = document.getElementById('editMe').innerHTML.replace(/&nbsp;/g, ' ');
