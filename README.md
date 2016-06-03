@@ -17,3 +17,4 @@ Options to pass as second parameter in `init` call:
 *  `width: number or 'valid width string'` - sets the width of the same area as above.
 *  `parentBorder: 'valid css border syntax'` - sets the border of the **whole** area div.
 *  `autosave: 'string with relative filepath'` - sets the filepath (and name) to the autosave document.
+  To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
