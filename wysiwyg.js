@@ -1,4 +1,4 @@
-/*global Event */
+/*global Event, XMLHttpRequest */
 window.myEditor = (function () {
     "use strict";
     var toggles = {

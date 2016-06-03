@@ -33,9 +33,11 @@ body {
     vertical-align: top;
     border-radius: 5px;
     border: 2px #3e3e3e solid;
-    outline: none;
 }
 
+.mySelect:focus {
+    outline: none;
+}
 .mySelect.fontFamily {
     background-image: url('media/font.svg');
     width: 170px;
