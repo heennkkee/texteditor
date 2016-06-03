@@ -412,7 +412,7 @@ window.myEditor = (function () {
     };
 
     autosave = function () {
-        if (saveCount > saveLimit) {
+        if (saveCount > saveLimit && saveLimit !== false) {
             save();
             saveCount = 0;
             clearSession();

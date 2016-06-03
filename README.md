@@ -17,5 +17,5 @@ Options to pass as second parameter in `init` call:
 *  `width: number or 'valid width string'` - sets the width of the same area as above.
 *  `parentBorder: 'valid css border syntax'` - sets the border of the **whole** area div.
 *  `autosave: 'string with relative filepath'` - sets the filepath (and name) to the autosave document.
-
+*  `saveLimit: number || false` - determines how many "autosaves" (saves to the sessions) that should be done before you dispatch a `save`event. Set to false to disable the automatic `save`events.
   To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
