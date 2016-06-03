@@ -1,6 +1,6 @@
 <?php
 
-$dsn = 'sqlite:testData.sqlite';
+$dsn = 'sqlite:testdata/testData.sqlite';
 try {
     $db = new PDO($dsn);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -11,7 +11,7 @@ if ($do == 'save') {
     $output = isset($_SESSION['editor-save']) ? $_SESSION['editor-save'] : '';
 } elseif ($do == 'clear') {
     unset($_SESSION['editor-save']);
-    $output = 'Cleared session.';
+    $output = '';
 }
 
 header('Content-type: application/json');

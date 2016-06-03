@@ -412,7 +412,7 @@ window.myEditor = (function () {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "autosave.php", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xmlhttp.send("id=" + contentEditor.id + "&do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, '<br>'));
+            xmlhttp.send("id=" + contentEditor.id + "&do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, ' '));
             saveCount += 1;
 
             xmlhttp.onreadystatechange = function () {

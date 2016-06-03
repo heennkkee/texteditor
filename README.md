@@ -1,1 +1,5 @@
 # texteditor
+
+## Commands
+
+`state`

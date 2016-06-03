@@ -7,7 +7,7 @@
         <h1>Min blogg</h1>
     </div>
     <?php
-        $dsn = 'sqlite:testData.sqlite';
+        $dsn = 'sqlite:testdata/testData.sqlite';
         try {
             $db = new PDO($dsn);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -25,10 +25,10 @@
 
     <script src="wysiwyg.js"></script>
     <script>
-        window.myEditor.init(document.getElementById('editMe'), {border: '2px red solid'});
+        window.myEditor.init(document.getElementById('editMe'), {border: ''});
 
         document.getElementById('editMe').addEventListener('save', function (event) {
-            var text = document.getElementById('editMe').innerHTML.replace(/&nbsp;/g, '<br>');
+            var text = document.getElementById('editMe').innerHTML.replace(/&nbsp;/g, ' ');
             var id = document.getElementById('post-id').value;
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "example_save_data.php", true);
@@ -37,7 +37,6 @@
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     var text = JSON.parse(xmlhttp.responseText).output;
-                    console.log(text);
                 }
             };
         });
