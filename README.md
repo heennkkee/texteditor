@@ -10,6 +10,8 @@ Include the `wysiwyg.js`, include the `wysiwyg.css` and make sure you have the `
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 
+### Options
+
 Options to pass as second parameter in `init` call:
 *  `state:'detached'` - results in the menu starting in the detached mode.
 *  `border: 'valid css border syntax'` - sets the border to whatever you specify it as.
