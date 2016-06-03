@@ -3,13 +3,9 @@ body {
 }
 .my-textarea {
     min-height: 150px;
-    border: 1px grey solid;
     border-radius: 5px;
     padding: 5px;
-}
-
-.my-textarea:focus {
-    outline-color: pink;
+    outline: none;
 }
 
 .textEditor {
@@ -27,7 +23,6 @@ body {
 
 .mySelect {
     height: 30px;
-
     background-repeat: no-repeat;
     background-size: 26px;
     padding: 2px 2px 2px 24px;

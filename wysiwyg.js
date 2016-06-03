@@ -1,3 +1,4 @@
+/*global Event */
 window.myEditor = (function () {
     "use strict";
     var toggles = {
@@ -13,14 +14,13 @@ window.myEditor = (function () {
         sizes = {1: 'Smallest', 2: 'Small', 3: 'Normal', 4: 'Big', 5: 'Bigger', 6: 'Huge', 7: 'Gigantic'},
         parent,
         statusBar,
-        statusBarAttached = true,
+        statusBarAttached,
         timeout,
         fadeOutTimer,
         fontFamily,
         fontSize,
         createStatusbar,
         contentEditor,
-        save,
         init,
         load,
         fadeIn,
@@ -40,22 +40,38 @@ window.myEditor = (function () {
         setButton,
         toggleLooks,
         toggleActive,
-        textEditor;
+        textEditor,
+        save,
+        saveEvent = new Event('save'),
+        saveCount = 0,
+        saveLimit,
+        clearSession;
 
-    textEditor = function (el) {
-        parent = el;
-        parent.className = 'textEditor minimized';
+    textEditor = function (reference, options) {
 
-        createStatusbar();
+        var bar = createStatusbar(options.state);
+        contentEditor = reference;
 
-        contentEditor = document.createElement('div');
+        parent = document.createElement('div');
+        parent.style.display = options.display;
+        parent.style.width = options.width;
+
+
+        contentEditor.parentNode.insertBefore(parent, contentEditor);
+        contentEditor.remove();
+
+        parent.className += 'textEditor minimized';
+        parent.appendChild(bar);
+        parent.appendChild(contentEditor);
+
         contentEditor.contentEditable = "true";
-        contentEditor.id = "henrik-text";
-        contentEditor.className = "my-textarea";
+        contentEditor.className += " my-textarea";
+        contentEditor.style.border = options.border;
 
         contentEditor.onkeydown = function (event) {
             checkHotkeys(event);
         };
+
 
         contentEditor.onmouseup = function () {
             check();
@@ -71,8 +87,6 @@ window.myEditor = (function () {
                 event.preventDefault();
             }
         };
-
-        document.getElementById('myArea').appendChild(contentEditor);
     };
 
     load = function () {
@@ -83,13 +97,28 @@ window.myEditor = (function () {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                 var text = JSON.parse(xmlhttp.responseText).output;
-                contentEditor.innerHTML = text;
+                if (text !== '') {
+                    contentEditor.innerHTML = text;
+                }
             }
         };
     };
 
-    init = function (el) {
-        textEditor(el);
+    init = function (el, options) {
+        var newOptions = {};
+
+        if (options === undefined) {
+            options = {};
+        }
+
+        saveLimit = (options.saveLimit === undefined) ? 10 : options.saveLimit;
+
+        newOptions.state = (options.state === undefined) ? '' : options.state;
+        newOptions.border = (options.border === undefined) ? '1px black solid' : options.border;
+        newOptions.display = (options.display === undefined) ? 'inline-block' : options.display;
+        newOptions.width = (options.width === undefined) ? '' : options.width;
+
+        textEditor(el, newOptions);
         load();
     };
 
@@ -110,27 +139,28 @@ window.myEditor = (function () {
 
     fadeIn = function (element) {
         var op = 0;  // initial opacity
+        element.style.display = null;
         fadeOutTimer = setInterval(function () {
             if (op >= 1) {
                 clearInterval(fadeOutTimer);
-                element.style.display = null;
             }
             element.style.opacity = op;
             op += 0.15;
         }, 20);
     };
 
-    save = function () {
-        console.log("save not implemented");
-    };
-
-    createStatusbar = function () {
+    createStatusbar = function (state) {
         var x = 0,
             temp;
 
         statusBar = document.createElement('div');
         statusBar.id = 'henrik-statusBar';
-        statusBar.className = "statusBar attached minimized";
+        statusBar.className = "statusBar minimized " + ((state === 'detached') ? 'detached' : 'attached');
+
+        statusBarAttached = ((state === 'detached') ? false : true);
+        if (!statusBarAttached) {
+            statusBar.style.display = 'none';
+        }
 
         statusBar.onmouseenter = function () {
             if (!statusBarAttached) {
@@ -154,8 +184,13 @@ window.myEditor = (function () {
         }
 
         temp = document.createElement('i');
-        temp.className = 'detach icon';
-        temp.title = 'Detach from editor';
+        if (!statusBarAttached) {
+            temp.className = 'attach icon';
+            temp.title = 'Attach to editor';
+        } else {
+            temp.className = 'detach icon';
+            temp.title = 'Detach from editor';
+        }
 
         temp.onmousedown = function (event) {
             toggleAttach(this);
@@ -199,6 +234,7 @@ window.myEditor = (function () {
         };
         fontSize.onchange = function () {
             document.execCommand('fontSize', null, this.value);
+            autosave();
         };
 
         statusBar.appendChild(fontSize);
@@ -218,6 +254,7 @@ window.myEditor = (function () {
 
         fontFamily.onchange = function () {
             document.execCommand('fontName', null, this.value);
+            autosave();
         };
 
         statusBar.appendChild(fontFamily);
@@ -226,19 +263,12 @@ window.myEditor = (function () {
             event.preventDefault();
         };
 
-        parent.appendChild(statusBar);
+        return statusBar;
     };
 
-    autosave = function () {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "autosave.php", true);
-        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlhttp.send("do=save&text=" + contentEditor.innerHTML);
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                console.log(xmlhttp.responseText);
-            }
-        };
+    save = function () {
+        clearSession();
+        contentEditor.dispatchEvent(saveEvent);
     };
 
     checkStates = function () {
@@ -253,7 +283,6 @@ window.myEditor = (function () {
     };
 
     check = function () {
-
         checkStates();
         checkFont();
     };
@@ -284,6 +313,7 @@ window.myEditor = (function () {
 
     toggleActive = function (e) {
         document.execCommand(e.cmd);
+        autosave();
         toggleLooks(e);
     };
 
@@ -372,13 +402,40 @@ window.myEditor = (function () {
     };
 
     autosave = function () {
+        if (saveCount > saveLimit) {
+            save();
+            saveCount = 0;
+            clearSession();
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "autosave.php", true);
+            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlhttp.send("do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, '<br>'));
+            saveCount += 1;
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    var output = JSON.parse(xmlhttp.responseText).output;
+                    if (output !== '') {
+                        console.log(output);
+                    }
+                }
+            };
+        }
+    };
+
+    clearSession = function () {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", "autosave.php", true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlhttp.send("do=save&text=" + contentEditor.innerHTML);
+        xmlhttp.send("do=clear");
+
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                console.log(xmlhttp.responseText);
+                var output = JSON.parse(xmlhttp.responseText).output;
+                if (output !== '') {
+                    console.log(output);
+                }
             }
         };
     };
