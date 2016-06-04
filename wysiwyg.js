@@ -49,7 +49,8 @@ window.myEditor = (function () {
         clearSession,
         autosavePath,
         parentDisplay,
-        toggleLock;
+        toggleLock,
+        clearUpEditor;
 
     textEditor = function (reference, options) {
         autosavePath = options.autosave;
@@ -209,7 +210,7 @@ window.myEditor = (function () {
 
 
         temp = document.createElement('i');
-        if (contentEditor.contentEditable) {
+        if (contentEditor.contentEditable === true) {
             temp.className = 'lock icon';
             temp.title = 'Lock the text for editing.';
         } else {
@@ -318,9 +319,30 @@ window.myEditor = (function () {
         return statusBar;
     };
 
+    clearUpEditor = function (doms) {
+        var x = 0;
+        for (x; x < doms.length; x += 1) {
+            if (doms[x].hasChildNodes()) {
+                clearUpEditor(doms[x].childNodes);
+            } else {
+                if (doms[x].data !== undefined) {
+                    if (doms[x].data.replace(/\n/g, '').replace(/ /g, '') === '') {
+                        doms[x].remove();
+                    }
+                }
+            }
+        }
+    };
+
     save = function () {
         clearSession();
+        if (contentEditor.hasChildNodes()) {
+            clearUpEditor(contentEditor.childNodes);
+        }
         saveEvent.text = contentEditor.innerHTML.replace(/&nbsp;/g, ' ');
+
+
+        console.log(contentEditor.innerHTML);
         contentEditor.dispatchEvent(saveEvent);
     };
 
@@ -417,9 +439,11 @@ window.myEditor = (function () {
     toggleLock = function (me) {
         if (contentEditor.contentEditable === "true") {
             me.className = me.className.replace('lock', 'unlock');
+            me.title = 'Unlock the text.';
             contentEditor.contentEditable = false;
         } else {
             me.className = me.className.replace('unlock', 'lock');
+            me.title = 'Lock the text for editing.';
             contentEditor.contentEditable = true;
         }
 

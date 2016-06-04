@@ -1,3 +1,13 @@
+<?php
+$dsn = 'sqlite:data/presentation.sqlite';
+try {
+    $db = new PDO($dsn);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+
+}
+?>
+
 <html>
 <head>
     <title>WYSIWYG Henrik</title>
@@ -6,7 +16,6 @@
         body {
             background-image: url('data/background.png');
             background-repeat: no-repeat;
-            background-size: 100%;
             font-family: 'Courier New';
         }
         .header {
@@ -28,23 +37,35 @@
 <body>
     <div class="header" id="header"><span class="title">WYSIWYG Henrik</span></div>
 
-    <div class="content" id="content">
+    <?php
+        $sth = $db->prepare('select case when b.text = p.text then "true" else "false" end AS "check" from backup b, presentation p');
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        if ($res[0]['check'] == 'false') {
+        ?>
+            <div class="content" style="width: 900px; margin: 0 auto;">
+                <div align="center">
+                    <p>
+                        <font size="4">
+                            <b>Did you just arrive to the page?</b><br>
+                            We believe in a free mind, but please restore the content of the site to the original before you judge it.<br>
+                            <a href="#" onclick="restoreDB()">Restore me!</a>
+                        </font>
+                    </p>
+                </div>
+            </div>
         <?php
-            $dsn = 'sqlite:data/presentation.sqlite';
-            try {
-                $db = new PDO($dsn);
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
+        }
+        ?>
 
-            }
+    <div class="content" id="myContent">
+        <?php
             $sth = $db->prepare('SELECT * FROM PRESENTATION');
             $sth->execute();
             $res = $sth->fetchAll(PDO::FETCH_ASSOC);
             echo $res[0]['TEXT'];
         ?>
     </div>
-
-
     <script src="wysiwyg.js"></script>
     <script>
         var options = {
@@ -53,12 +74,13 @@
             display: 'block',
             width: 900,
             parentMargin: '0 auto',
-            toolbarBackground: 'transparent'
+            toolbarBackground: 'transparent',
+            editable: 'false'
         };
 
-        initWYSIWYG(document.getElementById('content'), options);
+        initWYSIWYG(document.getElementById('myContent'), options);
 
-        document.getElementById('content').addEventListener('save', function (event) {
+        document.getElementById('myContent').addEventListener('save', function (event) {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "data/save_data.php", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -69,6 +91,13 @@
                 }
             };
         });
+
+        function restoreDB() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "data/restore.php", true);
+            xmlhttp.send();
+            window.location.reload(true);
+        }
     </script>
 </body>
 </html>
