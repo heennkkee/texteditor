@@ -1,4 +1,4 @@
-# Texteditor
+# WYSIWYG Henrik
 
 This project is the final part of the javascript course at BTH in Sweden (spring 2016). Please don't hesitate to use and do whatever you wish with the code.
 
