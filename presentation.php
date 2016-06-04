@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="wysiwyg.css">
     <style>
         body {
-            background-image: url('testdata/background.png');
+            background-image: url('data/background.png');
             background-repeat: no-repeat;
             background-size: 100%;
             font-family: 'Courier New';
@@ -20,22 +20,54 @@
             margin: 50px auto;
         }
         .content {
-            background-color: rgba(255, 255, 255, 0.6);
-            width: 900px;
-            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4C4C4C;
         }
     </style>
 </head>
 <body>
     <div class="header" id="header"><span class="title">WYSIWYG Henrik</span></div>
     <div class="content" id="content">
-        <div align="center"><font size="6">Welcome</font></div>
-        <div align="center"><font size="2"><b>(try to edit me...)</b></font></div>
+        <?php
+            $dsn = 'sqlite:data/presentation.sqlite';
+            try {
+                $db = new PDO($dsn);
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+
+            }
+            $sth = $db->prepare('SELECT * FROM PRESENTATION');
+            $sth->execute();
+            $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+            echo $res[0]['TEXT'];
+        ?>
     </div>
 
     <script src="wysiwyg.js"></script>
     <script>
-        initWYSIWYG(document.getElementById('content'), {border:'', state:'detached', display: 'block', width: 900, parentMargin: '0 auto', toolbarBackground: 'transparent'});
+        var options = {
+            border:'',
+            state:'detached',
+            display: 'block',
+            width: 900,
+            parentMargin: '0 auto',
+            toolbarBackground: 'transparent'
+        };
+
+        initWYSIWYG(document.getElementById('content'), options);
+
+        document.getElementById('content').addEventListener('save', function (event) {
+            var text = event.text;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "example_save_data.php", true);
+            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlhttp.send('text=' + text);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    var text = JSON.parse(xmlhttp.responseText).output;
+                }
+            };
+        });
     </script>
 </body>
 </html>

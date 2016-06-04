@@ -128,7 +128,7 @@ window.myEditor = (function () {
         newOptions.parentBorder = (options.parentBorder === undefined) ? '' : options.parentBorder;
         newOptions.parentMargin = (options.parentMargin === undefined) ? '' : options.parentMargin;
         newOptions.toolbarBackground = (options.toolbarBackground === undefined) ? 'white' : options.toolbarBackground;
-        
+
         fonts.sort();
 
         textEditor(el, newOptions);
@@ -282,6 +282,7 @@ window.myEditor = (function () {
 
     save = function () {
         clearSession();
+        saveEvent.text = contentEditor.innerHTML.replace(/&nbsp;/g, ' ');
         contentEditor.dispatchEvent(saveEvent);
     };
 
