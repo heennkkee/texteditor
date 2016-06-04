@@ -48,13 +48,18 @@ window.myEditor = (function () {
         saveLimit,
         clearSession,
         autosavePath,
-        parentDisplay;
+        parentDisplay,
+        toggleLock;
 
     textEditor = function (reference, options) {
         autosavePath = options.autosave;
 
-        var bar = createStatusbar(options.state, options.toolbarBackground);
         contentEditor = reference;
+        contentEditor.contentEditable = options.editable;
+        contentEditor.className += " my-textarea minimized";
+        contentEditor.style.border = options.border;
+
+        var bar = createStatusbar(options.state, options.toolbarBackground);
 
         parent = document.createElement('div');
         parentDisplay = options.display;
@@ -71,9 +76,12 @@ window.myEditor = (function () {
         parent.appendChild(bar);
         parent.appendChild(contentEditor);
 
-        contentEditor.contentEditable = "true";
-        contentEditor.className += " my-textarea minimized";
-        contentEditor.style.border = options.border;
+
+        contentEditor.onmousedown = function (event) {
+            if (event.target.tagName === 'A') {
+                window.open(event.target.href, '_blank');
+            }
+        };
 
         contentEditor.onkeydown = function (event) {
             checkHotkeys(event);
@@ -128,6 +136,7 @@ window.myEditor = (function () {
         newOptions.parentBorder = (options.parentBorder === undefined) ? '' : options.parentBorder;
         newOptions.parentMargin = (options.parentMargin === undefined) ? '' : options.parentMargin;
         newOptions.toolbarBackground = (options.toolbarBackground === undefined) ? 'white' : options.toolbarBackground;
+        newOptions.editable = (options.editable === undefined) ? "true" : options.editable;
 
         fonts.sort();
 
@@ -161,6 +170,7 @@ window.myEditor = (function () {
             op += 0.15;
         }, 20);
     };
+
 
     createStatusbar = function (state, bgcolor) {
         var x = 0,
@@ -196,6 +206,34 @@ window.myEditor = (function () {
             addToggleFunction(toggles[toggleKeys[x]]);
             statusBar.appendChild(toggles[toggleKeys[x]].obj);
         }
+
+
+        temp = document.createElement('i');
+        if (contentEditor.contentEditable) {
+            temp.className = 'lock icon';
+            temp.title = 'Lock the text for editing.';
+        } else {
+            temp.className = 'unlock icon';
+            temp.title = 'Unlock the text.';
+        }
+
+        temp.onmousedown = function (event) {
+            toggleLock(this);
+            event.preventDefault();
+        };
+
+        statusBar.appendChild(temp);
+
+
+        temp = document.createElement('i');
+        temp.className = 'link icon';
+        temp.onmousedown = function (event) {
+            var link = prompt("Where are you linking?", "http://");
+
+            document.execCommand('createLink', null, link);
+            event.preventDefault();
+        };
+        statusBar.appendChild(temp);
 
         temp = document.createElement('i');
         if (!statusBarAttached) {
@@ -374,6 +412,17 @@ window.myEditor = (function () {
     clearMyTimeout = function () {
         clearTimeout(timeout);
         clearInterval(fadeOutTimer);
+    };
+
+    toggleLock = function (me) {
+        if (contentEditor.contentEditable === "true") {
+            me.className = me.className.replace('lock', 'unlock');
+            contentEditor.contentEditable = false;
+        } else {
+            me.className = me.className.replace('unlock', 'lock');
+            contentEditor.contentEditable = true;
+        }
+
     };
 
     toggleAttach = function (me) {

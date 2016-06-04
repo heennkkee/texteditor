@@ -19,6 +19,10 @@ body {
     background-color: white;
 }
 
+.textEditor a {
+    cursor: pointer;
+}
+
 .maximized {
     width: 94% !important;
 }
@@ -74,7 +78,7 @@ body {
 }
 
 .statusBar.detached {
-    width: 210px;
+    width: 245px;
     position: absolute;
     border: 1px black solid;
     border-radius: 5px;
@@ -88,6 +92,7 @@ body {
     top: 0;
     left: 0;
 }
+
 .format_bold {
     background-image: url('media/bold.svg');
 }
@@ -123,4 +128,13 @@ body {
 }
 .save {
     background-image: url('media/save.svg');
+}
+.link {
+    background-image: url('media/link.svg');
+}
+.lock {
+    background-image: url('media/lock.svg');
+}
+.unlock {
+    background-image: url('media/unlock.svg');
 }

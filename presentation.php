@@ -27,6 +27,7 @@
 </head>
 <body>
     <div class="header" id="header"><span class="title">WYSIWYG Henrik</span></div>
+
     <div class="content" id="content">
         <?php
             $dsn = 'sqlite:data/presentation.sqlite';
@@ -43,6 +44,7 @@
         ?>
     </div>
 
+
     <script src="wysiwyg.js"></script>
     <script>
         var options = {
@@ -57,11 +59,10 @@
         initWYSIWYG(document.getElementById('content'), options);
 
         document.getElementById('content').addEventListener('save', function (event) {
-            var text = event.text;
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", "example_save_data.php", true);
+            xmlhttp.open("POST", "data/save_data.php", true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xmlhttp.send('text=' + text);
+            xmlhttp.send('text=' + event.text);
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     var text = JSON.parse(xmlhttp.responseText).output;

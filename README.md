@@ -24,3 +24,4 @@ Options to pass as second parameter in `init` call:
 
   To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
 *  `saveLimit: number || false` - determines how many "autosaves" (saves to the sessions) that should be done before you dispatch a `save`event. Set to false to disable the automatic `save`events.
+*  `editable: "true" || "false"` - will the content be editable by default, or does user have to unlock it before it's editable?
