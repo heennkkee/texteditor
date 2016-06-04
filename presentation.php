@@ -96,7 +96,12 @@ try {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("GET", "data/restore.php", true);
             xmlhttp.send();
-            window.location.reload(true);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    window.location.reload(true);
+                }
+            };
+
         }
     </script>
 </body>
