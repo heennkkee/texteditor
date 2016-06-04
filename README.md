@@ -6,7 +6,7 @@ This project is the final part of the javascript course at BTH in Sweden (spring
 
 ## Initiation
 
-Include the `wysiwyg.js`, include the `wysiwyg.css` and make sure you have the `autosave.php` (may be renamed/replace with a parameter) in the correct places.
+Include the files `wysiwyg.js` and `wysiwyg.css` and make sure you have the `autosave.php` (may be renamed/replace with a parameter) in the correct places.
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 
@@ -25,3 +25,5 @@ Options to pass as second parameter in `init` call:
   To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
 *  `saveLimit: number || false` - determines how many "autosaves" (saves to the sessions) that should be done before you dispatch a `save`event. Set to false to disable the automatic `save`events.
 *  `editable: "true" || "false"` - will the content be editable by default, or does user have to unlock it before it's editable?
+*  `parentMargin: 'valid css margin syntax'` - sets the margin of the **whole** area div.
+*  `toolbarBackground: 'valid css color'` - sets the backgrund color of the toolbar.
