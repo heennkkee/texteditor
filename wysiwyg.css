@@ -1,15 +1,6 @@
 body {
     overflow-y: scroll;
 }
-.my-textarea {
-    border-radius: 5px;
-    padding: 5px;
-    outline: none;
-}
-
-.textEditor {
-    background-color: transparent;
-}
 
 .textEditor.maximized {
     width: 94% !important;
@@ -50,6 +41,25 @@ body {
     background-image: url('media/font_size.svg');
     width: 100px;
 }
+
+.statusBar {
+    padding: 5px;
+}
+.statusBar.detached {
+    width: 245px;
+    position: absolute;
+    border: 1px black solid;
+    border-radius: 5px;
+    top: 0;
+    left: 0;
+    box-shadow: 5px 5px 25px #CCC;
+}
+.statusBar.attached {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
 .icon {
     background-size: 26px;
     background-repeat: no-repeat;
@@ -64,33 +74,11 @@ body {
     margin-bottom: 2px;
     background-color: white;
 }
-
 .icon:active {
     background-color: #DADADA;
 }
-
 .icon.active {
     background-color: #DADADA;
-}
-
-.statusBar {
-    padding: 5px;
-}
-
-.statusBar.detached {
-    width: 245px;
-    position: absolute;
-    border: 1px black solid;
-    border-radius: 5px;
-    top: 0;
-    left: 0;
-    box-shadow: 5px 5px 25px #CCC;
-}
-
-.statusBar.attached {
-    position: relative;
-    top: 0;
-    left: 0;
 }
 
 .format_bold {

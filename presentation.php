@@ -31,6 +31,10 @@ try {
         .content {
             background-color: rgba(255, 255, 255, 0.8);
             color: #4C4C4C;
+            width: 900px;
+            margin: 0 auto;
+            padding: 5px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -43,7 +47,7 @@ try {
         $res = $sth->fetchAll(PDO::FETCH_ASSOC);
         if ($res[0]['check'] == 'false') {
         ?>
-            <div class="content" style="width: 900px; margin: 0 auto;">
+            <div class="content" style="margin-bottom:20px;">
                 <div align="center">
                     <p>
                         <font size="4">
@@ -72,7 +76,7 @@ try {
             border:'',
             state:'detached',
             display: 'block',
-            width: 900,
+            width: 910,
             parentMargin: '0 auto',
             toolbarBackground: 'transparent',
             editable: 'false'
