@@ -13,7 +13,7 @@ To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selec
 To save to an external database, add an eventListener to the selected `div` (the one passed to the `init()` function) and listen for the event `save`. To get the text contained in the element which sent the `save` event look for the property `text` in the event, `event.text`, and you'll find the text ready for you.
 
 
-See a live example [here](http://localhost/javascript/kmom10/texteditor/presentation.php).
+See a live example [here](http://www.student.bth.se/~hear15/dbwebb-kurser/javascript/me/kmom10/texteditor/presentation.php).
 
 ### Options
 

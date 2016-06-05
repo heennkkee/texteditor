@@ -121,6 +121,7 @@ window.myEditor = (function () {
     };
 
     init = function (el, options) {
+
         var newOptions = {};
 
         if (options === undefined) {
@@ -220,6 +221,7 @@ window.myEditor = (function () {
 
         temp.onmousedown = function (event) {
             toggleLock(this);
+            fadeOut(statusBar);
             event.preventDefault();
         };
 
