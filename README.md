@@ -10,7 +10,10 @@ Include the files `wysiwyg.js` and `wysiwyg.css` and make sure you have the `aut
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 
+`initWYSIWYG(document.getElementById('myContentDiv'), {state: 'detached'});`
+
 To save to an external database, add an eventListener to the selected `div` (the one passed to the `init()` function) and listen for the event `save`. To get the text contained in the element which sent the `save` event look for the property `text` in the event, `event.text`, and you'll find the text ready for you.
+    document.getElementById('myContentDiv').
 
 
 See a live example [here](http://www.student.bth.se/~hear15/dbwebb-kurser/javascript/me/kmom10/texteditor/presentation.php).
@@ -18,7 +21,7 @@ See a live example [here](http://www.student.bth.se/~hear15/dbwebb-kurser/javasc
 ### Options
 
 Options to pass as second parameter in `init` call:
-*  `state:'detached'` - results in the menu starting in the detached mode.
+*  `state:'detached'` - results in the menu starting in the detached mode, any other options ends up as attached.
 *  `border: 'valid css border syntax'` - sets the border to whatever you specify it as.
 *  `display: 'valid css display syntax'` - sets the dispaly of the **whole** area (the container of the editing area and the toolbar in attached mode).
 *  `width: number or 'valid width string'` - sets the width of the same area as above.
