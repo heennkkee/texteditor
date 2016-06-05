@@ -21,7 +21,16 @@ To save to an external database, add an eventListener to the selected `div` (the
 
 See a live example [here](http://www.student.bth.se/~hear15/dbwebb-kurser/javascript/me/kmom10/texteditor/presentation.php).
 
-### Options
+
+## Keybindings
+
+Currently supported keybindings are:
+*  ctrl + **b** - Toggle bold.
+*  ctrl + **i** - Toggle Italic.
+*  ctrl + **u** - Toggle underline.
+
+
+## Options
 
 The are structured as the following:
 
