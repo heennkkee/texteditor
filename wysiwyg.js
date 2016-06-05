@@ -57,7 +57,7 @@ window.myEditor = (function () {
 
         contentEditor = reference;
         contentEditor.contentEditable = options.editable;
-        contentEditor.className += " my-textarea minimized";
+        contentEditor.className += " minimized";
         contentEditor.style.border = options.border;
 
         var bar = createStatusbar(options.state, options.toolbarBackground);
@@ -73,7 +73,7 @@ window.myEditor = (function () {
         contentEditor.parentNode.insertBefore(parent, contentEditor);
         contentEditor.remove();
 
-        parent.className += 'textEditor minimized';
+        parent.className = 'textEditor minimized';
         parent.appendChild(bar);
         parent.appendChild(contentEditor);
 
@@ -342,9 +342,6 @@ window.myEditor = (function () {
             clearUpEditor(contentEditor.childNodes);
         }
         saveEvent.text = contentEditor.innerHTML.replace(/&nbsp;/g, ' ');
-
-
-        console.log(contentEditor.innerHTML);
         contentEditor.dispatchEvent(saveEvent);
     };
 
@@ -365,10 +362,8 @@ window.myEditor = (function () {
     };
 
     checkFont = function () {
-
         var font = document.queryCommandValue('fontName');
         font = font.replace(/'/g, '');
-
         fontFamily.value = font;
 
         var size = document.queryCommandValue('fontSize');
@@ -448,7 +443,6 @@ window.myEditor = (function () {
             me.title = 'Lock the text for editing.';
             contentEditor.contentEditable = true;
         }
-
     };
 
     toggleAttach = function (me) {
