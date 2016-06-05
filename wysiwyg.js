@@ -105,11 +105,11 @@ window.myEditor = (function () {
         if (myOptions.autosave === false) {
             return;
         }
-        
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", myOptions.autosave, true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlhttp.send("do=load&id=" + contentEditor.id);
+        xmlhttp.send("do=load");
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                 var text = JSON.parse(xmlhttp.responseText).output;
@@ -518,7 +518,7 @@ window.myEditor = (function () {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", myOptions.autosave, true);
             xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xmlhttp.send("id=" + contentEditor.id + "&do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, ' '));
+            xmlhttp.send("do=save&text=" + contentEditor.innerHTML.replace(/&nbsp;/g, ' '));
             saveCount += 1;
 
             xmlhttp.onreadystatechange = function () {
@@ -540,7 +540,7 @@ window.myEditor = (function () {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", myOptions.autosave, true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlhttp.send("do=clear&id=" + contentEditor.id);
+        xmlhttp.send("do=clear");
 
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {

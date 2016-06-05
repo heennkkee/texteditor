@@ -86,8 +86,7 @@ try {
                 state:'detached',
                 background: 'rgba(255, 255, 255, 0.8)',
             },
-            editable: 'false',
-            autosave : false
+            editable: 'false'
         };
 
         initWYSIWYG(document.getElementById('myContent'), options);
