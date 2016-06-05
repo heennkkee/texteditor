@@ -1,7 +1,3 @@
-body {
-    overflow-y: scroll;
-}
-
 .textEditor.maximized {
     width: 94% !important;
     position: absolute;

@@ -17,6 +17,7 @@ try {
             background-image: url('data/background.png');
             background-repeat: no-repeat;
             font-family: 'Courier New';
+            overflow-y: scroll;
         }
         .header {
             width: 100%;
