@@ -169,8 +169,8 @@ window.myEditor = (function () {
                 clearInterval(fadeOutTimer);
             }
             element.style.opacity = op;
-            op += 0.15;
-        }, 20);
+            op += 0.1;
+        }, 15);
     };
 
 
