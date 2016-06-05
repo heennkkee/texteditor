@@ -40,16 +40,23 @@ The are structured as the following:
         editable,
     }
 
-Options to pass as second parameter in `init` call:
-*  `state:'detached'` - results in the menu starting in the detached mode, any other options ends up as attached.
-*  `border: 'valid css border syntax'` - sets the border to whatever you specify it as.
-*  `display: 'valid css display syntax'` - sets the dispaly of the **whole** area (the container of the editing area and the toolbar in attached mode).
-*  `width: number or 'valid width string'` - sets the width of the same area as above.
-*  `parentBorder: 'valid css border syntax'` - sets the border of the **whole** area div.
-*  `autosave: 'string with relative filepath'` - sets the filepath (and name) to the autosave document.
+Options available are the following:
 
+**Global settings**
+*  `autosave: 'string with relative filepath'` - sets the filepath (and name) to the autosave document.
   To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
 *  `saveLimit: number || false` - determines how many "autosaves" (saves to the sessions) that should be done before you dispatch a `save`event. Set to false to disable the automatic `save`events.
 *  `editable: "true" || "false"` - will the content be editable by default, or does user have to unlock it before it's editable?
-*  `parentMargin: 'valid css margin syntax'` - sets the margin of the **whole** area div.
-*  `toolbarBackground: 'valid css color'` - sets the backgrund color of the toolbar.
+
+**Parent settings**
+*  `parent.display: 'valid css display syntax'` - sets the dispaly of the **parent** (the container of the editing area and the toolbar in attached mode).
+*  `parent.width: number or 'valid width string'` - sets the width of the **parent**.
+*  `parent.border: 'valid css border syntax'` - sets the border of the **parent**.
+*  `parent.margin: 'valid css margin syntax'` - sets the margin of the **parent**.
+
+**Editor setitngs**
+*  `editor.border: 'valid css border syntax'` - sets the border of the **editor** part to whatever you specify it as.
+
+**Toolbar settings**
+*  `toolbar.state:'detached'` - results in the menu starting in the detached mode, any other options results as attached.
+*  `toolbar.background: 'valid css color'` - sets the backgrund color of the toolbar.
