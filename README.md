@@ -10,10 +10,10 @@ Include the files `wysiwyg.js` and `wysiwyg.css` and make sure you have the `aut
 
 To initiate the editor call `initWYSIWYG()` with a standard javascript DOM selector as first parameter and an optional object of settings (listed **below**) as second parameter.
 
-`initWYSIWYG(document.getElementById('myContentDiv'), {state: 'detached'});`
+`initWYSIWYG(document.getElementById('myContentDiv'), {toolbar: {state: 'detached'}});`
 
 To save to an external database, add an eventListener to the selected `div` (the one passed to the `init()` function) and listen for the event `save`. To get the text contained in the element which sent the `save` event look for the property `text` in the event, `event.text`, and you'll find the text ready for you.
-    
+
     document.getElementById('myContentDiv').addEventListener('save', function (event) {
         mySaveToDbFunction(event.text);
     });
@@ -22,6 +22,23 @@ To save to an external database, add an eventListener to the selected `div` (the
 See a live example [here](http://www.student.bth.se/~hear15/dbwebb-kurser/javascript/me/kmom10/texteditor/presentation.php).
 
 ### Options
+
+The are structured as the following:
+
+    var options = {
+        parent: {
+
+        },
+        editor: {
+
+        },
+        toolbar: {
+
+        }
+        autosave
+        saveLimit,
+        editable,
+    }
 
 Options to pass as second parameter in `init` call:
 *  `state:'detached'` - results in the menu starting in the detached mode, any other options ends up as attached.
