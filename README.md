@@ -43,7 +43,7 @@ The are structured as the following:
 Options available are the following:
 
 **Global settings**
-*  `autosave: 'string with relative filepath'` - sets the filepath (and name) to the autosave document.
+*  `autosave: 'string with relative filepath' || false` - sets the filepath (and name) to the autosave document, set to false if you do not wish to use autosave.
   To use the autosave you're good to just write your own autosave if prefered. The one shipped with the editor is saving the text after every keypress in a session. Parameters send to the autosave document is `do` and `text`.
 *  `saveLimit: number || false` - determines how many "autosaves" (saves to the sessions) that should be done before you dispatch a `save`event. Set to false to disable the automatic `save`events.
 *  `editable: "true" || "false"` - will the content be editable by default, or does user have to unlock it before it's editable?
