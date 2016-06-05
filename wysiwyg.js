@@ -234,7 +234,7 @@ window.myEditor = (function () {
             temp.title = 'Unlock the text.';
         }
 
-        temp.onmousedown = function (event) {
+        temp.onmouseup = function (event) {
             toggleLock(this);
             if (!statusBarAttached) {
                 fadeOut(statusBar);
@@ -247,10 +247,13 @@ window.myEditor = (function () {
 
         temp = document.createElement('i');
         temp.className = 'link icon';
-        temp.onmousedown = function (event) {
+        temp.onmouseup = function (event) {
             var link = prompt("Where are you linking?", "http://");
 
             document.execCommand('createLink', null, link);
+            event.preventDefault();
+        };
+        temp.onmousedown = function (event) {
             event.preventDefault();
         };
         statusBar.appendChild(temp);
@@ -264,8 +267,11 @@ window.myEditor = (function () {
             temp.title = 'Detach from editor';
         }
 
-        temp.onmousedown = function (event) {
+        temp.onmouseup = function (event) {
             toggleAttach(this);
+            event.preventDefault();
+        };
+        temp.onmousedown = function (event) {
             event.preventDefault();
         };
         statusBar.appendChild(temp);
@@ -273,8 +279,11 @@ window.myEditor = (function () {
         temp = document.createElement('i');
         temp.className = 'maximize icon';
         temp.title = 'Maximize editor';
-        temp.onmousedown = function (event) {
+        temp.onmouseup = function (event) {
             toggleMaximize(this);
+            event.preventDefault();
+        };
+        temp.onmousedown = function (event) {
             event.preventDefault();
         };
 
@@ -283,8 +292,11 @@ window.myEditor = (function () {
         temp = document.createElement('i');
         temp.className = 'save icon';
         temp.title = 'Save text';
-        temp.onmousedown = function (event) {
+        temp.onmouseup = function (event) {
             save();
+            event.preventDefault();
+        };
+        temp.onmousedown = function (event) {
             event.preventDefault();
         };
         statusBar.appendChild(temp);
@@ -421,9 +433,12 @@ window.myEditor = (function () {
     };
 
     addToggleFunction = function (e) {
-        e.obj.onmousedown = function (event) {
+        e.obj.onmouseup = function (event) {
             toggleActive(e);
             checkStates();
+            event.preventDefault();
+        };
+        e.obj.onmousedown = function (event) {
             event.preventDefault();
         };
     };
