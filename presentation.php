@@ -74,12 +74,18 @@ try {
     <script src="wysiwyg.js"></script>
     <script>
         var options = {
-            border:'',
-            state:'detached',
-            display: 'block',
-            width: 910,
-            parentMargin: '0 auto',
-            toolbarBackground: 'transparent',
+            editor: {
+                border:'',
+            },
+            parent: {
+                display: 'block',
+                width: 910,
+                margin: '0 auto',
+            },
+            toolbar: {
+                state:'detached',
+                background: 'rgba(255, 255, 255, 0.8)',
+            },
             editable: 'false'
         };
 

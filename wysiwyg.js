@@ -45,30 +45,28 @@ window.myEditor = (function () {
         save,
         saveEvent = new Event('save'),
         saveCount = 0,
-        saveLimit,
         clearSession,
         autosavePath,
-        parentDisplay,
         toggleLock,
-        clearUpEditor;
+        clearUpEditor,
+        myOptions = {parent: {}, editor: {}, toolbar: {}};
 
-    textEditor = function (reference, options) {
-        autosavePath = options.autosave;
+    textEditor = function (reference) {
+        autosavePath = myOptions.autosave;
 
         contentEditor = reference;
-        contentEditor.contentEditable = options.editable;
+        contentEditor.contentEditable = myOptions.editable;
         contentEditor.className += " minimized";
-        contentEditor.style.border = options.border;
+        contentEditor.style.border = myOptions.editor.border;
 
-        var bar = createStatusbar(options.state, options.toolbarBackground);
+        var bar = createStatusbar();
 
         parent = document.createElement('div');
-        parentDisplay = options.display;
 
-        parent.style.display = parentDisplay;
-        parent.style.width = options.width;
-        parent.style.border = options.parentBorder;
-        parent.style.margin = options.parentMargin;
+        parent.style.display = myOptions.parent.display;
+        parent.style.width = myOptions.parent.width;
+        parent.style.border = myOptions.parent.border;
+        parent.style.margin = myOptions.parent.margin;
 
         contentEditor.parentNode.insertBefore(parent, contentEditor);
         contentEditor.remove();
@@ -122,27 +120,42 @@ window.myEditor = (function () {
 
     init = function (el, options) {
 
-        var newOptions = {};
-
         if (options === undefined) {
             options = {};
         }
 
-        saveLimit = (options.saveLimit === undefined) ? 10 : options.saveLimit;
 
-        newOptions.state = (options.state === undefined) ? '' : options.state;
-        newOptions.border = (options.border === undefined) ? '1px black solid' : options.border;
-        newOptions.display = (options.display === undefined) ? 'inline-block' : options.display;
-        newOptions.width = (options.width === undefined) ? '' : options.width;
-        newOptions.autosave = (options.autosave === undefined) ? 'autosave.php' : options.autosave;
-        newOptions.parentBorder = (options.parentBorder === undefined) ? '' : options.parentBorder;
-        newOptions.parentMargin = (options.parentMargin === undefined) ? '' : options.parentMargin;
-        newOptions.toolbarBackground = (options.toolbarBackground === undefined) ? 'white' : options.toolbarBackground;
-        newOptions.editable = (options.editable === undefined) ? "true" : options.editable;
+        myOptions.saveLimit = (options.saveLimit === undefined) ? 10 : options.saveLimit;
+        myOptions.autosave = (options.autosave === undefined) ? 'autosave.php' : options.autosave;
+        myOptions.editable = (options.editable === undefined) ? "true" : options.editable;
+
+        if (options.parent === undefined) {
+            options.parent = {};
+        }
+
+        myOptions.parent.display = (options.parent.display === undefined) ? 'inline-block' : options.parent.display;
+        myOptions.parent.width = (options.parent.width === undefined) ? '' : options.parent.width;
+        myOptions.parent.border = (options.parent.border === undefined) ? '' : options.parent.border;
+        myOptions.parent.margin = (options.parent.margin === undefined) ? '' : options.parent.margin;
+
+        if (options.toolbar === undefined) {
+            options.toolbar = {};
+        }
+
+        myOptions.toolbar.state = (options.toolbar.state === undefined) ? '' : options.toolbar.state;
+        myOptions.toolbar.background = (options.toolbar.background === undefined) ? 'white' : options.toolbar.background;
+
+        if (options.editor === undefined) {
+            options.editor = {};
+        }
+
+        myOptions.editor.border = (options.editor.border === undefined) ? '1px black solid' : options.editor.border;
+
+
 
         fonts.sort();
 
-        textEditor(el, newOptions);
+        textEditor(el);
         load();
     };
 
@@ -174,16 +187,16 @@ window.myEditor = (function () {
     };
 
 
-    createStatusbar = function (state, bgcolor) {
+    createStatusbar = function () {
         var x = 0,
             temp;
 
         statusBar = document.createElement('div');
         statusBar.id = 'henrik-statusBar';
-        statusBar.className = "statusBar minimized " + ((state === 'detached') ? 'detached' : 'attached');
-        statusBar.style.background = bgcolor;
+        statusBar.className = "statusBar minimized " + ((myOptions.toolbar.state === 'detached') ? 'detached' : 'attached');
+        statusBar.style.background = myOptions.toolbar.background;
 
-        statusBarAttached = ((state === 'detached') ? false : true);
+        statusBarAttached = ((myOptions.toolbar.state === 'detached') ? false : true);
         if (!statusBarAttached) {
             statusBar.style.display = 'none';
         }
@@ -221,7 +234,9 @@ window.myEditor = (function () {
 
         temp.onmousedown = function (event) {
             toggleLock(this);
-            fadeOut(statusBar);
+            if (!statusBarAttached) {
+                fadeOut(statusBar);
+            }
             event.preventDefault();
         };
 
@@ -483,12 +498,16 @@ window.myEditor = (function () {
                 me.className = me.className.replace('maximize', 'minimize');
                 me.title = 'Minimize the editor.';
             }
-            fadeIn(parent, parentDisplay);
+            fadeIn(parent, myOptions.parent.display);
         });
     };
 
     autosave = function () {
-        if (saveCount > saveLimit && saveLimit !== false) {
+        if (myOptions.autosave === false) {
+            return;
+        }
+
+        if (saveCount > myOptions.parent.width && myOptions.parent.width !== false) {
             save();
             saveCount = 0;
             clearSession();
