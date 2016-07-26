@@ -15,7 +15,7 @@ try {
     <style>
         body {
             background-image: url('data/background.png');
-            background-repeat: no-repeat;
+            background-repeat: repeat-y;
             font-family: 'Courier New';
             overflow-y: scroll;
         }
@@ -73,6 +73,7 @@ try {
     </div>
     <script src="wysiwyg.js"></script>
     <script>
+        var state = (window.orientation === undefined) ? 'detached' : 'attached';
         var options = {
             editor: {
                 border:'',
@@ -83,7 +84,7 @@ try {
                 margin: '0 auto',
             },
             toolbar: {
-                state:'detached',
+                state: state,
                 background: 'rgba(255, 255, 255, 0.8)',
             },
             editable: 'false'
